@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerichte Auswahl</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .button-container, .list-container {
+            width: 40%;
+        }
+        .list-container {
+            border-left: 1px solid #ccc;
+            padding-left: 20px;
+        }
+        button {
+            display: block;
+            margin: 10px 0;
+        }
+        .list-item {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="button-container">
+    <button onclick="addGericht('Gericht 1')">Gericht 1</button>
+    <button onclick="addGericht('Gericht 2')">Gericht 2</button>
+    <button onclick="addGericht('Gericht 3')">Gericht 3</button>
+    <button onclick="addGericht('Gericht 4')">Gericht 4</button>
+    <button onclick="addGericht('Gericht 5')">Gericht 5</button>
+</div>
+
+<div class="list-container">
+    <ul id="ausgewaehlte-gerichte">
+        <!-- Ausgewählte Gerichte werden hier angezeigt -->
+    </ul>
+    <p id="gesamtpreis">Gesamtpreis: 0.00 €</p>
+    <button onclick="clean()">Clean</button>
+</div>
+
+<script>
+    const preise = {
+        "Gericht 1": 10.0,
+        "Gericht 2": 12.5,
+        "Gericht 3": 8.0,
+        "Gericht 4": 15.0,
+        "Gericht 5": 11.0
+    };
+
+    function addGericht(gericht) {
+        const liste = document.getElementById('ausgewaehlte-gerichte');
+        const listItem = document.createElement('li');
+        listItem.className = 'list-item';
+        listItem.textContent = gericht;
+        liste.appendChild(listItem);
+        berechnePreis();
+    }
+
+    function berechnePreis() {
+        const liste = document.getElementById('ausgewaehlte-gerichte');
+        let gesamtpreis = 0;
+        for (let i = 0; i < liste.children.length; i++) {
+            const gericht = liste.children[i].textContent;
+            gesamtpreis += preise[gericht];
+        }
+        document.getElementById('gesamtpreis').textContent = `Gesamtpreis: ${gesamtpreis.toFixed(2)} €`;
+    }
+
+    function clean() {
+        const liste = document.getElementById('ausgewaehlte-gerichte');
+        liste.innerHTML = '';
+        document.getElementById('gesamtpreis').textContent = 'Gesamtpreis: 0.00 €';
+    }
+</script>
+
+</body>
+</html>
